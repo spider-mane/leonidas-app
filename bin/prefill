@@ -1,0 +1,179 @@
+#!/usr/bin/env php
+<?php
+
+use Laravel\Prompts\TextPrompt;
+use WebTheory\Erector\Action\AutoloadDumper;
+use WebTheory\Erector\Action\DirectoryKeeper;
+use WebTheory\Erector\Action\FileCopier;
+use WebTheory\Erector\Action\FilenameChanger;
+use WebTheory\Erector\Action\FileRemover;
+use WebTheory\Erector\Action\FileTransformer;
+use WebTheory\Erector\Action\GitInitiator;
+use WebTheory\Erector\Action\Message;
+use WebTheory\Erector\BaseResolver;
+use WebTheory\Erector\Builder;
+use WebTheory\Erector\CallableReplacements;
+use WebTheory\Erector\LaravelPrompt;
+use WebTheory\Erector\Transformation\JsonMerger;
+use WebTheory\Erector\Transformation\TextReplacer;
+
+$root = dirname(__DIR__, 1);
+
+require_once $root . '/tests/bootstrap.php';
+
+################################################################################
+# Prompt
+################################################################################
+
+// allow defaults to be passed to script for testing
+$developerName = $developerName ?? trim(shell_exec('git config user.name'));
+$developerEmail = $developerEmail ?? trim(shell_exec('git config user.email'));
+$appName = $appName ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));
+
+$developerGithub = $developerGithub ?? '';
+$appPrefix = $appPrefix ?? '';
+$appVersion = $appVersion ?? '0.1.0';
+$psr4Namespace = $psr4Namespace ?? '';
+
+$fields =  [
+  'app_name' => new TextPrompt('App name', '', $appName),
+  'app_version' => new TextPrompt('App version', '0.1.0', $appVersion),
+
+  'developer_name' => new TextPrompt('Developer name', '', $developerName),
+  'developer_email' => new TextPrompt('Developer email address', '', $developerEmail),
+  'developer_github_name' => new TextPrompt('Developer Github username', '<username> in https://github.com/username', $developerGithub),
+  'developer_website' => new TextPrompt('Developer website', '', 'https://github.com/{developer_github_name}'),
+
+  'vendor_name' => new TextPrompt('Vendor name', '', '{developer_github_name}'),
+  'vendor_github' => new TextPrompt('Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'),
+  'vendor_website' => new TextPrompt('Vendor website', '', 'https://github.com/{vendor_name}'),
+];
+
+$consent = 'Modify files with these values and create new git repository?';
+
+################################################################################
+# Configurations
+################################################################################
+
+$stubDir = '__prefill__';
+$stubs = $root . '/' . $stubDir;
+
+$replacements = [
+  # plaintext
+  'pseudo-app' => 'app_name',
+  'leonidas-app' => 'app_name',
+
+  # placeholders
+  ':app_name' => 'app_name',
+  ':app_version' => 'app_version',
+  ':developer_name' => 'developer_name',
+  ':developer_email' => 'developer_email',
+  ':developer_github_name' => 'developer_github_name',
+  ':developer_website' => 'developer_website',
+  ':vendor_name' => 'vendor_name',
+  ':vendor_github' => 'vendor_github',
+  ':vendor_website' => 'vendor_website',
+  ':system_year' => fn () => date('Y'),
+];
+
+// files to transform
+$boilerplate = array_merge(
+  glob($stubs . '/*'),
+  array_map(fn ($file) => $root . $file, [
+    '/.devcontainer/devcontainer.json',
+    '/bin/apprun',
+    '/bin/enterapp',
+    '/docker-compose.override.example.yml',
+    '/docker/php/Dockerfile',
+  ]),
+  ...array_map(fn ($file) => glob($root . $file), [
+    '/src/*.php',
+  ]),
+);
+
+// files whose output target does not correspond to its own relative path
+$locations = [
+  'app.json' => 'assets',
+];
+
+// files where user input needs to be further refined
+$filters = [];
+
+// json files whose contents should be merged with a functional counterpart
+$json = [
+  'composer.json' => function (array $base, array $stub): array {
+    $composer = array_replace_recursive($base, $stub);
+
+    $composer['developers'] = $stub['developers'];
+    $composer['keywords'] = $stub['keywords'];
+    $composer['autoload']['psr-4'] = $stub['autoload']['psr-4'];
+
+    $scripts = $composer['scripts'];
+
+    unset(
+      $scripts['post-create-project-cmd'],
+      $scripts['fill']
+    );
+
+    $composer['scripts'] = $scripts;
+
+    return $composer;
+  },
+  'assets/app.json' => function (array $base, array $stub): array {
+    $app = array_replace_recursive($base, $stub);
+
+    return $app;
+  },
+];
+
+// files to rename
+$rename = [
+  '.example.gitattributes' => fn () => '.gitattributes',
+  'assets/.example.gitattributes' => fn () => '.gitattributes',
+];
+
+// files to copy to root directory
+$copy = [];
+
+// files to delete
+$remove = [
+  $stubDir,
+  'bin/composer-prefill',
+  'bin/prefill',
+  'bin/testprefill',
+  'bin/testproject',
+  'bin/.gitattributes',
+  'prefill',
+];
+
+$keep = [
+  'bin',
+];
+
+$message = "Done! \e[1;37;44m#StandWith\e\e[0;30;43mUkraine\e[0m\n";
+
+################################################################################
+# Process
+################################################################################
+
+$replacements = new CallableReplacements($replacements);
+$baseResolver = new BaseResolver($locations, $root, $stubs);
+
+$builder = new Builder(
+  new GitInitiator(),
+  new FileTransformer(
+    $boilerplate,
+    $filters,
+    $baseResolver,
+    new TextReplacer($replacements),
+    new JsonMerger($root, $json),
+  ),
+  new FilenameChanger(new CallableReplacements($rename)),
+  new AutoloadDumper(),
+  new FileRemover(...$remove),
+  new FileCopier(...$copy),
+  new DirectoryKeeper(...$keep),
+  new Message($message)
+);
+
+$builder->build($root, new LaravelPrompt($fields, $consent));

@@ -1,0 +1,103 @@
+#!/usr/bin/env php
+<?php
+
+use Faker\Factory;
+
+require dirname(__DIR__) . '/tests/bootstrap.php';
+
+################################################################################
+# Config
+################################################################################
+$root = dirname(__DIR__, 1);
+$testDir = $root . '/build/test-prefill';
+$prefill = $testDir . '/bin/prefill';
+$faker = Factory::create();
+
+$exclude = array_merge(
+  [
+    '.env',
+    '.idea',
+    '.project',
+    '.vscode',
+    'assets/build',
+    'assets/dist',
+    'assets/node_modules',
+    'assets/package-lock.json',
+    'build',
+    'logs',
+    'composer.lock',
+    'vendor',
+    'wordpress',
+  ],
+  glob("*.code-workspace"),
+  glob("**/*.code-workspace"),
+);
+
+$answers = [
+  'authorName' => $faker->name(),
+  'authorEmail' => $faker->email(),
+  'authorGithub' => $faker->slug(random_int(1, 3)),
+
+  'appName' => ucwords($faker->words(random_int(1, 5), true)),
+  'appSlug' => $faker->slug(random_int(1, 3)),
+  'appPrefix' => $faker->lexify(),
+  'appVersion' => $faker->semver(),
+  'appWebsite' => $faker->url(),
+  'appDescription' => $faker->sentence(random_int(10, 20)),
+
+  'psr4Namespace' => implode('\\', array_map('ucwords', $faker->words(2))),
+];
+
+################################################################################
+# Functions (as closures to avoid potential collisions with prefill script)
+################################################################################
+$copyContents = function (
+  string $dir,
+  string $copyDir,
+  array $exclude = [],
+  ?string $sub = null
+) use (&$copyContents): void {
+  $currentDir = $sub ?? $dir;
+  $files = array_filter(scandir($currentDir), function ($file) {
+    return !in_array($file, ['.', '..']);
+  });
+
+  foreach ($files as $file) {
+    $file = "$currentDir/$file";
+    $copy = $copyDir . '/' . str_replace("$dir", '', $file);
+
+    if (in_array($file, $exclude)) {
+      continue;
+    }
+
+    if (is_dir($file)) {
+      mkdir($copy);
+      $copyContents($dir, $copyDir, $exclude, $file);
+
+      continue;
+    }
+
+    copy($file, $copy);
+  }
+};
+
+################################################################################
+# Run
+################################################################################
+$exclude = array_map(function ($file) use ($root) {
+  return "$root/$file";
+}, $exclude);
+
+if (file_exists($testDir)) {
+  shell_exec("chmod -R 777 $testDir && rm -rf -f $testDir");
+}
+
+mkdir($testDir, 0777, true);
+$copyContents($root, $testDir, $exclude);
+
+chdir($testDir);
+
+(function ($__prefill__, $__answers__) {
+  extract($__answers__);
+  require $__prefill__;
+})($prefill, $answers);

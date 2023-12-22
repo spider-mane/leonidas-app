@@ -1,0 +1,140 @@
+[11-Sep-2023 04:40:33 UTC] [2023-09-11T00:40:33.730695-04:00] errorlog.ERROR: Error: Interface "WebTheory\Facade\Interfaces\FacadeInterface" not found in file /packages/leonidas/src/Plugin/Access/_Facade.php on line 9
+Stack trace:
+  1. Error->() /packages/leonidas/src/Plugin/Access/_Facade.php:9
+  2. include() /var/www/html/vendor/composer/ClassLoader.php:576
+  3. Composer\Autoload\{closure}() /var/www/html/vendor/composer/ClassLoader.php:427
+  4. Composer\Autoload\ClassLoader->loadClass() /packages/leonidas/src/Framework/Bootstrap/BindContainerToFacades.php:17
+  5. Leonidas\Framework\Bootstrap\BindContainerToFacades->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+  6. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/ExtensionLoader.php:150
+  7. Leonidas\Framework\ExtensionLoader->initBootClasses() /packages/leonidas/src/Framework/ExtensionLoader.php:64
+  8. Leonidas\Framework\ExtensionLoader->bootstrap() /packages/leonidas/src/Plugin/Launcher.php:38
+  9. Leonidas\Plugin\Launcher->boot() /packages/leonidas/src/Plugin/Launcher.php:26
+ 10. Leonidas\Plugin\Launcher->launch() /packages/leonidas/src/Plugin/Launcher.php:65
+ 11. Leonidas\Plugin\Launcher->load() /packages/leonidas/src/Plugin/Launcher.php:59
+ 12. Leonidas\Plugin\Launcher->init() /packages/leonidas/plugin.php:34
+ 13. Roots\Bedrock\Autoloader->{closure}() /packages/leonidas/plugin.php:35
+ 14. include_once() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:64
+ 15. Roots\Bedrock\Autoloader->Roots\Bedrock\{closure}() [internal]:0
+ 16. array_map() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:65
+ 17. Roots\Bedrock\Autoloader->loadPlugins() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:51
+ 18. Roots\Bedrock\Autoloader->__construct() /packages/leonidas/src/Framework/App/Bootstrap/AutoloadMustUsePlugins.php:15
+ 19. Leonidas\Framework\App\Bootstrap\AutoloadMustUsePlugins->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+ 20. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/App/AppLoader.php:50
+ 21. Leonidas\Framework\App\AppLoader->initIntegrationClasses() /packages/leonidas/src/Framework/App/AppLoader.php:41
+ 22. Leonidas\Framework\App\AppLoader->integrate() /var/www/html/app/Launcher.php:51
+ 23. App\Launcher->listen() /var/www/html/app/Launcher.php:46
+ 24. App\Launcher->plug() /var/www/html/app/Launcher.php:80
+ 25. App\Launcher->setup() /var/www/html/app/Launcher.php:70
+ 26. App\Launcher->hook() /var/www/html/public/app/mu-plugins/app.php:19
+ 27. include_once() /var/www/html/public/wp/wp-settings.php:387
+ 28. require() /var/www/html/public/wp-config.php:32
+ 29. require_once() /var/www/html/public/wp/wp-load.php:55
+ 30. require_once() /var/www/html/public/wp/wp-admin/admin.php:34
+ 31. require_once() /var/www/html/public/wp/wp-admin/plugins.php:10
+  {"git":[]}
+
+[11-Sep-2023 04:40:34 UTC] [2023-09-11T00:40:34.179155-04:00] errorlog.ERROR: Error: Interface "WebTheory\Facade\Interfaces\FacadeInterface" not found in file /packages/leonidas/src/Plugin/Access/_Facade.php on line 9
+Stack trace:
+  1. Error->() /packages/leonidas/src/Plugin/Access/_Facade.php:9
+  2. include() /var/www/html/vendor/composer/ClassLoader.php:576
+  3. Composer\Autoload\{closure}() /var/www/html/vendor/composer/ClassLoader.php:427
+  4. Composer\Autoload\ClassLoader->loadClass() /packages/leonidas/src/Framework/Bootstrap/BindContainerToFacades.php:17
+  5. Leonidas\Framework\Bootstrap\BindContainerToFacades->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+  6. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/ExtensionLoader.php:150
+  7. Leonidas\Framework\ExtensionLoader->initBootClasses() /packages/leonidas/src/Framework/ExtensionLoader.php:64
+  8. Leonidas\Framework\ExtensionLoader->bootstrap() /packages/leonidas/src/Plugin/Launcher.php:38
+  9. Leonidas\Plugin\Launcher->boot() /packages/leonidas/src/Plugin/Launcher.php:26
+ 10. Leonidas\Plugin\Launcher->launch() /packages/leonidas/src/Plugin/Launcher.php:65
+ 11. Leonidas\Plugin\Launcher->load() /packages/leonidas/src/Plugin/Launcher.php:59
+ 12. Leonidas\Plugin\Launcher->init() /packages/leonidas/plugin.php:34
+ 13. Roots\Bedrock\Autoloader->{closure}() /packages/leonidas/plugin.php:35
+ 14. include_once() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:64
+ 15. Roots\Bedrock\Autoloader->Roots\Bedrock\{closure}() [internal]:0
+ 16. array_map() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:65
+ 17. Roots\Bedrock\Autoloader->loadPlugins() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:51
+ 18. Roots\Bedrock\Autoloader->__construct() /packages/leonidas/src/Framework/App/Bootstrap/AutoloadMustUsePlugins.php:15
+ 19. Leonidas\Framework\App\Bootstrap\AutoloadMustUsePlugins->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+ 20. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/App/AppLoader.php:50
+ 21. Leonidas\Framework\App\AppLoader->initIntegrationClasses() /packages/leonidas/src/Framework/App/AppLoader.php:41
+ 22. Leonidas\Framework\App\AppLoader->integrate() /var/www/html/app/Launcher.php:51
+ 23. App\Launcher->listen() /var/www/html/app/Launcher.php:46
+ 24. App\Launcher->plug() /var/www/html/app/Launcher.php:80
+ 25. App\Launcher->setup() /var/www/html/app/Launcher.php:70
+ 26. App\Launcher->hook() /var/www/html/public/app/mu-plugins/app.php:19
+ 27. include_once() /var/www/html/public/wp/wp-settings.php:387
+ 28. require() /var/www/html/public/wp-config.php:32
+ 29. require_once() /var/www/html/public/wp/wp-load.php:55
+ 30. require_once() /var/www/html/public/wp/wp-admin/admin.php:34
+ 31. require_once() /var/www/html/public/wp/wp-admin/plugins.php:10
+  {"git":[]}
+
+[11-Sep-2023 04:40:34 UTC] [2023-09-11T00:40:34.805241-04:00] errorlog.ERROR: Error: Interface "WebTheory\Facade\Interfaces\FacadeInterface" not found in file /packages/leonidas/src/Plugin/Access/_Facade.php on line 9
+Stack trace:
+  1. Error->() /packages/leonidas/src/Plugin/Access/_Facade.php:9
+  2. include() /var/www/html/vendor/composer/ClassLoader.php:576
+  3. Composer\Autoload\{closure}() /var/www/html/vendor/composer/ClassLoader.php:427
+  4. Composer\Autoload\ClassLoader->loadClass() /packages/leonidas/src/Framework/Bootstrap/BindContainerToFacades.php:17
+  5. Leonidas\Framework\Bootstrap\BindContainerToFacades->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+  6. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/ExtensionLoader.php:150
+  7. Leonidas\Framework\ExtensionLoader->initBootClasses() /packages/leonidas/src/Framework/ExtensionLoader.php:64
+  8. Leonidas\Framework\ExtensionLoader->bootstrap() /packages/leonidas/src/Plugin/Launcher.php:38
+  9. Leonidas\Plugin\Launcher->boot() /packages/leonidas/src/Plugin/Launcher.php:26
+ 10. Leonidas\Plugin\Launcher->launch() /packages/leonidas/src/Plugin/Launcher.php:65
+ 11. Leonidas\Plugin\Launcher->load() /packages/leonidas/src/Plugin/Launcher.php:59
+ 12. Leonidas\Plugin\Launcher->init() /packages/leonidas/plugin.php:34
+ 13. Roots\Bedrock\Autoloader->{closure}() /packages/leonidas/plugin.php:35
+ 14. include_once() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:64
+ 15. Roots\Bedrock\Autoloader->Roots\Bedrock\{closure}() [internal]:0
+ 16. array_map() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:65
+ 17. Roots\Bedrock\Autoloader->loadPlugins() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:51
+ 18. Roots\Bedrock\Autoloader->__construct() /packages/leonidas/src/Framework/App/Bootstrap/AutoloadMustUsePlugins.php:15
+ 19. Leonidas\Framework\App\Bootstrap\AutoloadMustUsePlugins->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+ 20. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/App/AppLoader.php:50
+ 21. Leonidas\Framework\App\AppLoader->initIntegrationClasses() /packages/leonidas/src/Framework/App/AppLoader.php:41
+ 22. Leonidas\Framework\App\AppLoader->integrate() /var/www/html/app/Launcher.php:51
+ 23. App\Launcher->listen() /var/www/html/app/Launcher.php:46
+ 24. App\Launcher->plug() /var/www/html/app/Launcher.php:80
+ 25. App\Launcher->setup() /var/www/html/app/Launcher.php:70
+ 26. App\Launcher->hook() /var/www/html/public/app/mu-plugins/app.php:19
+ 27. include_once() /var/www/html/public/wp/wp-settings.php:387
+ 28. require() /var/www/html/public/wp-config.php:32
+ 29. require_once() /var/www/html/public/wp/wp-load.php:55
+ 30. require_once() /var/www/html/public/wp/wp-blog-header.php:13
+ 31. require() /var/www/html/public/index.php:11
+  {"git":[]}
+
+[11-Sep-2023 04:40:35 UTC] [2023-09-11T00:40:35.092021-04:00] errorlog.ERROR: Error: Interface "WebTheory\Facade\Interfaces\FacadeInterface" not found in file /packages/leonidas/src/Plugin/Access/_Facade.php on line 9
+Stack trace:
+  1. Error->() /packages/leonidas/src/Plugin/Access/_Facade.php:9
+  2. include() /var/www/html/vendor/composer/ClassLoader.php:576
+  3. Composer\Autoload\{closure}() /var/www/html/vendor/composer/ClassLoader.php:427
+  4. Composer\Autoload\ClassLoader->loadClass() /packages/leonidas/src/Framework/Bootstrap/BindContainerToFacades.php:17
+  5. Leonidas\Framework\Bootstrap\BindContainerToFacades->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+  6. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/ExtensionLoader.php:150
+  7. Leonidas\Framework\ExtensionLoader->initBootClasses() /packages/leonidas/src/Framework/ExtensionLoader.php:64
+  8. Leonidas\Framework\ExtensionLoader->bootstrap() /packages/leonidas/src/Plugin/Launcher.php:38
+  9. Leonidas\Plugin\Launcher->boot() /packages/leonidas/src/Plugin/Launcher.php:26
+ 10. Leonidas\Plugin\Launcher->launch() /packages/leonidas/src/Plugin/Launcher.php:65
+ 11. Leonidas\Plugin\Launcher->load() /packages/leonidas/src/Plugin/Launcher.php:59
+ 12. Leonidas\Plugin\Launcher->init() /packages/leonidas/plugin.php:34
+ 13. Roots\Bedrock\Autoloader->{closure}() /packages/leonidas/plugin.php:35
+ 14. include_once() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:64
+ 15. Roots\Bedrock\Autoloader->Roots\Bedrock\{closure}() [internal]:0
+ 16. array_map() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:65
+ 17. Roots\Bedrock\Autoloader->loadPlugins() /var/www/html/vendor/roots/bedrock-autoloader/src/Autoloader.php:51
+ 18. Roots\Bedrock\Autoloader->__construct() /packages/leonidas/src/Framework/App/Bootstrap/AutoloadMustUsePlugins.php:15
+ 19. Leonidas\Framework\App\Bootstrap\AutoloadMustUsePlugins->boot() /packages/leonidas/src/Framework/ExtensionLoader.php:164
+ 20. Leonidas\Framework\ExtensionLoader->runBootProcesses() /packages/leonidas/src/Framework/App/AppLoader.php:50
+ 21. Leonidas\Framework\App\AppLoader->initIntegrationClasses() /packages/leonidas/src/Framework/App/AppLoader.php:41
+ 22. Leonidas\Framework\App\AppLoader->integrate() /var/www/html/app/Launcher.php:51
+ 23. App\Launcher->listen() /var/www/html/app/Launcher.php:46
+ 24. App\Launcher->plug() /var/www/html/app/Launcher.php:80
+ 25. App\Launcher->setup() /var/www/html/app/Launcher.php:70
+ 26. App\Launcher->hook() /var/www/html/public/app/mu-plugins/app.php:19
+ 27. include_once() /var/www/html/public/wp/wp-settings.php:387
+ 28. require() /var/www/html/public/wp-config.php:32
+ 29. require_once() /var/www/html/public/wp/wp-load.php:55
+ 30. require_once() /var/www/html/public/wp/wp-blog-header.php:13
+ 31. require() /var/www/html/public/index.php:11
+  {"git":[]}
+

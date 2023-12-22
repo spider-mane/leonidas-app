@@ -1,0 +1,45 @@
+# Application
+/public/app/*
+!/public/app/mu-plugins
+/public/app/mu-plugins/*
+!/public/app/mu-plugins/app.php
+
+# WordPress
+/public/wp
+
+# Misc development files
+*.cache
+/build/
+/var/*
+@playground
+captainhook.config.json
+cghooks.lock
+
+# Composer
+/vendor/
+/pathagist.json
+composer.lock
+
+# Docker
+docker-compose.override.yml
+docker/@local
+
+# Env
+*.env
+.env.*
+!.env.example
+
+# Editor/ IDE
+*.code-workspace
+.vscode
+.idea
+.project
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# System files
+.DS_Store
+Thumbs.db
