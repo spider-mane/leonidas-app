@@ -7,10 +7,15 @@ services:
         TZ: "America/New_York"
         UNMINIMIZE: yes
         USER: "${USER}"
-        GIT_USER:
-        GIT_EMAIL:
+        GIT_USER: ""
+        GIT_EMAIL: ""
         GIT_DEFAULT_BRANCH: "master"
         GIT_INSTALL_GCM: yes
+    healthcheck:
+      interval: 2s
+      timeout: 2s
+      start_period: 10s
+      # retries: 5
     environment:
       TERM: "${TERM}"
       ZSH_THEME: "powerlevel10k/powerlevel10k"

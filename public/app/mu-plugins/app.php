@@ -1,13 +1,13 @@
 <?php
 
 /**
- * Plugin Name: Application
- * Description: WordPress customizations
+ * Plugin Name: :app_title
+ * Description: :app_description
  * Version: :app_version
- * Requires at least: 6.1
- * Requires PHP: 8.0
- * Author: :developer_name
- * Author URI: :developer_website
+ * Requires at least: 6.3
+ * Requires PHP: 8.1
+ * Author: :author_name
+ * Author URI: :author_website
  * License: MIT
  * License URI: https://opensource.org/licenses/MIT
  * Text Domain: app

@@ -1,0 +1,13 @@
+{
+  "name": ":vendor_name/:app_name",
+  "description": ":app_description",
+  "homepage": ":app_documentation",
+  "authors": [
+    {
+      "name": ":author_name",
+      "email": ":author_email",
+      "homepage": ":author_website",
+      "role": "Developer"
+    }
+  ]
+}

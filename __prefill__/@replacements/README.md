@@ -27,7 +27,7 @@ If you discover any security related issues, please email :author_email instead 
 
 ## Credits
 
-- [:app_author][link-author]
+- [:author_name][link-author]
 - [All Contributors][link-contributors]
 
 ## License
@@ -45,5 +45,5 @@ The MIT License (MIT). Please see [License File](LICENSE.md) for more informatio
 [link-scrutinizer]: https://scrutinizer-ci.com/g/:vendor_github/:app_slug/code-structure
 [link-code-quality]: https://scrutinizer-ci.com/g/:vendor_github/:app_slug
 [link-downloads]: https://packagist.org/packages/:vendor_name/:app_slug
-[link-author]: https://github.com/:author_username
+[link-author]: https://github.com/:author_github
 [link-contributors]: ../../contributors

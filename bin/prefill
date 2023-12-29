@@ -26,27 +26,82 @@ require_once $root . '/tests/bootstrap.php';
 ################################################################################
 
 // allow defaults to be passed to script for testing
-$developerName = $developerName ?? trim(shell_exec('git config user.name'));
-$developerEmail = $developerEmail ?? trim(shell_exec('git config user.email'));
 $appName = $appName ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));
+$authorName = $authorName ?? trim(shell_exec('git config user.name'));
+$authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
 
-$developerGithub = $developerGithub ?? '';
-$appPrefix = $appPrefix ?? '';
+$appTitle = $appTitle ?? 'Application';
+$appDescription = $appDescription ?? 'Custom WordPress application for ';
+$authorGithub = $authorGithub ?? '';
 $appVersion = $appVersion ?? '0.1.0';
 $psr4Namespace = $psr4Namespace ?? '';
 
 $fields =  [
-  'app_name' => new TextPrompt('App name', '', $appName),
-  'app_version' => new TextPrompt('App version', '0.1.0', $appVersion),
+  // app
+  'app_title' => new TextPrompt(
+    label: 'App title',
+    placeholder: 'Application Title',
+    default: $appTitle
+  ),
+  'app_name' => new TextPrompt(
+    label: 'App name',
+    placeholder: 'application-name',
+    default: $appName
+  ),
+  'app_version' => new TextPrompt(
+    label: 'App version',
+    placeholder: '0.1.0',
+    default: $appVersion
+  ),
+  'app_description' => new TextPrompt(
+    label: 'App description',
+    placeholder: '0.1.0',
+    default: $appDescription
+  ),
+  'app_documentation' => new TextPrompt(
+    label: 'App documentation',
+    placeholder: '',
+    default: 'https://github.com/{vendor_github}/{app_name}'
+  ),
 
-  'developer_name' => new TextPrompt('Developer name', '', $developerName),
-  'developer_email' => new TextPrompt('Developer email address', '', $developerEmail),
-  'developer_github_name' => new TextPrompt('Developer Github username', '<username> in https://github.com/username', $developerGithub),
-  'developer_website' => new TextPrompt('Developer website', '', 'https://github.com/{developer_github_name}'),
+  // author
+  'author_name' => new TextPrompt(
+    label: 'Author name',
+    placeholder: '',
+    default: $authorName
+  ),
+  'author_email' => new TextPrompt(
+    label: 'Author email address',
+    placeholder: '',
+    default: $authorEmail
+  ),
+  'author_github' => new TextPrompt(
+    label: 'Author Github username',
+    placeholder: '<username> in https://github.com/username',
+    default: $authorGithub
+  ),
+  'author_website' => new TextPrompt(
+    label: 'Author website',
+    placeholder: '',
+    default: 'https://github.com/{author_github}'
+  ),
 
-  'vendor_name' => new TextPrompt('Vendor name', '', '{developer_github_name}'),
-  'vendor_github' => new TextPrompt('Vendor Github username', '<username> in https://github.com/username', '{vendor_name}'),
-  'vendor_website' => new TextPrompt('Vendor website', '', 'https://github.com/{vendor_name}'),
+  // vendor
+  'vendor_name' => new TextPrompt(
+    label: 'Vendor name',
+    placeholder: '',
+    default: '{author_github}'
+  ),
+  'vendor_github' => new TextPrompt(
+    label: 'Vendor Github username',
+    placeholder: '<username> in https://github.com/username',
+    default: '{vendor_name}'
+  ),
+  'vendor_website' => new TextPrompt(
+    label: 'Vendor website',
+    placeholder: '',
+    default: 'https://github.com/{vendor_name}'
+  ),
 ];
 
 $consent = 'Modify files with these values and create new git repository?';
@@ -55,21 +110,27 @@ $consent = 'Modify files with these values and create new git repository?';
 # Configurations
 ################################################################################
 
-$stubDir = '__prefill__';
-$stubs = $root . '/' . $stubDir;
+$stubDirname = '__prefill__';
+$replacementsDirname = '@replacements';
 
-$replacements = [
+$stubs = $root . '/' . $stubDirname;
+$replacements = $stubs . '/' . $replacementsDirname;
+
+$updates = [
   # plaintext
   'pseudo-app' => 'app_name',
   'leonidas-app' => 'app_name',
 
   # placeholders
+  ':app_title' => 'app_title',
   ':app_name' => 'app_name',
   ':app_version' => 'app_version',
-  ':developer_name' => 'developer_name',
-  ':developer_email' => 'developer_email',
-  ':developer_github_name' => 'developer_github_name',
-  ':developer_website' => 'developer_website',
+  ':app_description' => 'app_description',
+  ':app_documentation' => 'app_documentation',
+  ':author_name' => 'author_name',
+  ':author_email' => 'author_email',
+  ':author_github' => 'author_github',
+  ':author_website' => 'author_website',
   ':vendor_name' => 'vendor_name',
   ':vendor_github' => 'vendor_github',
   ':vendor_website' => 'vendor_website',
@@ -78,16 +139,43 @@ $replacements = [
 
 // files to transform
 $boilerplate = array_merge(
-  glob($stubs . '/*'),
+  // files
   array_map(fn ($file) => $root . $file, [
-    '/.devcontainer/devcontainer.json',
+    // app
+    '/public/app/mu-plugins/app.php',
+
+    // bin
     '/bin/apprun',
     '/bin/enterapp',
+
+    // docker
+    '/.devcontainer/devcontainer.json',
     '/docker-compose.override.example.yml',
     '/docker/php/Dockerfile',
+
+    // misc
+    '/.php-cs-fixer.dist.php',
+    '/phpcs.xml.dist',
+    '/phpunit.xml.dist',
+    '/wp-cli.yml',
   ]),
+
+  // stubs
+  ...array_map(fn ($file) => glob($stubs . $file . '/*'), [
+    '/' . $replacementsDirname,
+  ]),
+
+  // globs
   ...array_map(fn ($file) => glob($root . $file), [
-    '/src/*.php',
+    // php
+    '/app/*.php',
+    '/app/**/*.php',
+    '/app/**/**/*.php',
+    '/app/**/**/**/*.php',
+    '/boot/*.php',
+    '/config/*.php',
+    '/tests/**/*.php',
+    '/tests/**/**/*.php',
   ]),
 );
 
@@ -97,20 +185,26 @@ $locations = [
 ];
 
 // files where user input needs to be further refined
-$filters = [];
+$filters = [
+  $root . '/config/app.php' => function ($values) {
+    $values['theme_description'] = addslashes($values['theme_description']);
+
+    return $values;
+  }
+];
 
 // json files whose contents should be merged with a functional counterpart
 $json = [
   'composer.json' => function (array $base, array $stub): array {
     $composer = array_replace_recursive($base, $stub);
 
-    $composer['developers'] = $stub['developers'];
-    $composer['keywords'] = $stub['keywords'];
-    $composer['autoload']['psr-4'] = $stub['autoload']['psr-4'];
+    $composer['authors'] = $stub['authors'];
 
     $scripts = $composer['scripts'];
 
     unset(
+      $composer['type'],
+      $composer['keywords'],
       $scripts['post-create-project-cmd'],
       $scripts['fill']
     );
@@ -128,8 +222,8 @@ $json = [
 
 // files to rename
 $rename = [
-  '.example.gitattributes' => fn () => '.gitattributes',
-  'assets/.example.gitattributes' => fn () => '.gitattributes',
+  '.stub.gitattributes' => fn () => '.gitattributes',
+  'assets/.stub.gitattributes' => fn () => '.gitattributes',
 ];
 
 // files to copy to root directory
@@ -137,7 +231,7 @@ $copy = [];
 
 // files to delete
 $remove = [
-  $stubDir,
+  $stubDirname,
   'bin/composer-prefill',
   'bin/prefill',
   'bin/testprefill',
@@ -156,8 +250,8 @@ $message = "Done! \e[1;37;44m#StandWith\e\e[0;30;43mUkraine\e[0m\n";
 # Process
 ################################################################################
 
-$replacements = new CallableReplacements($replacements);
-$baseResolver = new BaseResolver($locations, $root, $stubs);
+$updates = new CallableReplacements($updates);
+$baseResolver = new BaseResolver($locations, $root, $replacements);
 
 $builder = new Builder(
   new GitInitiator(),
@@ -165,7 +259,7 @@ $builder = new Builder(
     $boilerplate,
     $filters,
     $baseResolver,
-    new TextReplacer($replacements),
+    new TextReplacer($updates),
     new JsonMerger($root, $json),
   ),
   new FilenameChanger(new CallableReplacements($rename)),
