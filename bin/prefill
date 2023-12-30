@@ -19,6 +19,16 @@ use WebTheory\Erector\Transformation\TextReplacer;
 
 $root = dirname(__DIR__, 1);
 
+################################################################################
+# Setup
+################################################################################
+
+if (!isset($__prefill__)) {
+  if (!shell_exec("composer run setup -d {$root} --ansi")) {
+    exit;
+  }
+}
+
 require_once $root . '/tests/bootstrap.php';
 
 ################################################################################
@@ -26,44 +36,16 @@ require_once $root . '/tests/bootstrap.php';
 ################################################################################
 
 // allow defaults to be passed to script for testing
-$appName = $appName ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));
 $authorName = $authorName ?? trim(shell_exec('git config user.name'));
 $authorEmail = $authorEmail ?? trim(shell_exec('git config user.email'));
-
-$appTitle = $appTitle ?? 'Application';
-$appDescription = $appDescription ?? 'Custom WordPress application for ';
 $authorGithub = $authorGithub ?? '';
+
+$appName = $appName ?? strtolower(preg_replace('/[^A-Za-z0-9-]+/', '-', basename($root)));
+$appTitle = $appTitle ?? 'Application';
 $appVersion = $appVersion ?? '0.1.0';
-$psr4Namespace = $psr4Namespace ?? '';
+$appDescription = $appDescription ?? 'Custom WordPress application for ';
 
 $fields =  [
-  // app
-  'app_title' => new TextPrompt(
-    label: 'App title',
-    placeholder: 'Application Title',
-    default: $appTitle
-  ),
-  'app_name' => new TextPrompt(
-    label: 'App name',
-    placeholder: 'application-name',
-    default: $appName
-  ),
-  'app_version' => new TextPrompt(
-    label: 'App version',
-    placeholder: '0.1.0',
-    default: $appVersion
-  ),
-  'app_description' => new TextPrompt(
-    label: 'App description',
-    placeholder: '0.1.0',
-    default: $appDescription
-  ),
-  'app_documentation' => new TextPrompt(
-    label: 'App documentation',
-    placeholder: '',
-    default: 'https://github.com/{vendor_github}/{app_name}'
-  ),
-
   // author
   'author_name' => new TextPrompt(
     label: 'Author name',
@@ -101,6 +83,33 @@ $fields =  [
     label: 'Vendor website',
     placeholder: '',
     default: 'https://github.com/{vendor_name}'
+  ),
+
+  // app
+  'app_title' => new TextPrompt(
+    label: 'App title',
+    placeholder: 'Application Title',
+    default: $appTitle
+  ),
+  'app_name' => new TextPrompt(
+    label: 'App name',
+    placeholder: 'application-name',
+    default: $appName
+  ),
+  'app_version' => new TextPrompt(
+    label: 'App version',
+    placeholder: '0.1.0',
+    default: $appVersion
+  ),
+  'app_description' => new TextPrompt(
+    label: 'App description',
+    placeholder: '0.1.0',
+    default: $appDescription
+  ),
+  'app_documentation' => new TextPrompt(
+    label: 'App documentation',
+    placeholder: '',
+    default: 'https://github.com/{vendor_github}/{app_name}'
   ),
 ];
 
@@ -161,8 +170,8 @@ $boilerplate = array_merge(
   ]),
 
   // stubs
-  ...array_map(fn ($file) => glob($stubs . $file . '/*'), [
-    '/' . $replacementsDirname,
+  ...array_map(fn ($dir) => glob($stubs . '/' . $dir . '/*'), [
+    $replacementsDirname,
   ]),
 
   // globs
