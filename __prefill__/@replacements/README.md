@@ -34,16 +34,16 @@ If you discover any security related issues, please email :author_email instead 
 
 The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/:vendor_name/:app_slug.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/:vendor_name/:app_name.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/:vendor_github/:app_slug/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/:vendor_github/:app_slug.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/:vendor_github/:app_slug.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/:vendor_name/:app_slug.svg?style=flat-square
-[link-packagist]: https://packagist.org/packages/:vendor_name/:app_slug
-[link-travis]: https://travis-ci.org/:vendor_github/:app_slug
-[link-scrutinizer]: https://scrutinizer-ci.com/g/:vendor_github/:app_slug/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/:vendor_github/:app_slug
-[link-downloads]: https://packagist.org/packages/:vendor_name/:app_slug
+[ico-travis]: https://img.shields.io/travis/:vendor_github/:app_name/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/:vendor_github/:app_name.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/:vendor_github/:app_name.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/:vendor_name/:app_name.svg?style=flat-square
+[link-packagist]: https://packagist.org/packages/:vendor_name/:app_name
+[link-travis]: https://travis-ci.org/:vendor_github/:app_name
+[link-scrutinizer]: https://scrutinizer-ci.com/g/:vendor_github/:app_name/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/:vendor_github/:app_name
+[link-downloads]: https://packagist.org/packages/:vendor_name/:app_name
 [link-author]: https://github.com/:author_github
 [link-contributors]: ../../contributors
